@@ -58,6 +58,11 @@ TEST_F(NginxStringConfigTest, TestingUnbalancedBraces) {
 
 }
 
+
+TEST_F(NginxStringConfigTest, TestingUnbalancedBracesTheOtherWay) {
+  EXPECT_FALSE(ParseString("host { 80; } } }")) << "Failed curly brace test";
+}
+
 TEST_F(NginxStringConfigTest, MultiLineConfig) {
   EXPECT_TRUE(ParseString("proxy_redirect\t\toff;\nproxy_set_header\t\tHost\t\t$host;\nproxy_set_header\t\tX-Real-IP\t\t$remote_addr;\n"));
   EXPECT_EQ(config_.statements_.size(),3);
