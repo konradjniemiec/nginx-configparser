@@ -66,9 +66,12 @@ TEST_F(NginxStringConfigTest, MultiLineConfig) {
   EXPECT_EQ(config_.statements_[2]->tokens_.size(),3);
 }
 TEST_F(NginxStringConfigTest, NestedConfig) {
-  EXPECT_TRUE(ParseString("http {\n\tinclude\tcong/mime.types\n\tserver {\n\t\tlisten 80;\n\t\troot html;\n\t}\n}"));
+  EXPECT_TRUE(ParseString("http {\n\tinclude\tcong/mime.types;\n\tserver {\n\t\tlisten 80;\n\t\troot html;\n\t}\n}"));
   EXPECT_EQ(config_.statements_.size(),1);
   ASSERT_NE(config_.statements_[0]->child_block_,nullptr);
+  EXPECT_EQ(config_.statements_[0]->child_block_->statements_.size(),2);
+  ASSERT_NE(config_.statements_[0]->child_block_->statements_[1]->child_block_,nullptr);
+  EXPECT_EQ(config_.statements_[0]->child_block_->statements_[1]->child_block_->statements_.size(),2);
 }
 
 

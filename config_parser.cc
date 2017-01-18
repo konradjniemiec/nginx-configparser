@@ -211,6 +211,10 @@ bool NginxConfigParser::Parse(std::istream* config_file, NginxConfig* config) {
         // Error.
         break;
       }
+      if (config_stack.size() != 1) {
+	// Error.
+	break;
+      }
       return true;
     } else {
       // Error. Unknown token.
